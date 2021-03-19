@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patterns &#8212; MLStyle.jl Documentation</title>
+    <title>Pattern Matching &#8212; MLStyle.jl Documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="canonical" href="https://thautwarm.github.io/MLStyle.jl/latest/syntax/pattern.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -97,17 +96,18 @@
 <li class="toctree-l2"><a class="reference internal" href="adt.html#about-type-parameters">About Type Parameters</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Patterns</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pattern Matching</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#literal-patterns">Literal Patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#capturing-patterns">Capturing Patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#type-patterns">Type Patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#guards">Guards</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#and-patterns">And-Patterns</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#destructuring-tuple-array-and-dict-patterns">Destructuring Tuple Array and Dict Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#destructuring-tuples-arrays-and-dictionaries-with-pattern-matching">Destructuring Tuples, Arrays, and Dictionaries with Pattern Matching</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deconstruction-of-custom-composite-data">Deconstruction of Custom Composite Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#predicates">Predicates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#range-patterns">Range Patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reference-patterns">Reference Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#macro-call-patterns">Macro Call Patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#custom-patterns">Custom Patterns</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#support-pattern-matching-for-julia-enums">Support Pattern Matching for Julia Enums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pattern-synonyms">Pattern Synonyms</a></li>
@@ -163,17 +163,18 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Patterns</a><ul>
+<li><a class="reference internal" href="#">Pattern Matching</a><ul>
 <li><a class="reference internal" href="#literal-patterns">Literal Patterns</a></li>
 <li><a class="reference internal" href="#capturing-patterns">Capturing Patterns</a></li>
 <li><a class="reference internal" href="#type-patterns">Type Patterns</a></li>
 <li><a class="reference internal" href="#guards">Guards</a></li>
 <li><a class="reference internal" href="#and-patterns">And-Patterns</a></li>
-<li><a class="reference internal" href="#destructuring-tuple-array-and-dict-patterns">Destructuring Tuple Array and Dict Patterns</a></li>
+<li><a class="reference internal" href="#destructuring-tuples-arrays-and-dictionaries-with-pattern-matching">Destructuring Tuples, Arrays, and Dictionaries with Pattern Matching</a></li>
 <li><a class="reference internal" href="#deconstruction-of-custom-composite-data">Deconstruction of Custom Composite Data</a></li>
 <li><a class="reference internal" href="#predicates">Predicates</a></li>
 <li><a class="reference internal" href="#range-patterns">Range Patterns</a></li>
 <li><a class="reference internal" href="#reference-patterns">Reference Patterns</a></li>
+<li><a class="reference internal" href="#macro-call-patterns">Macro Call Patterns</a></li>
 <li><a class="reference internal" href="#custom-patterns">Custom Patterns</a><ul>
 <li><a class="reference internal" href="#support-pattern-matching-for-julia-enums">Support Pattern Matching for Julia Enums</a></li>
 <li><a class="reference internal" href="#pattern-synonyms">Pattern Synonyms</a></li>
@@ -229,9 +230,9 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="patterns">
-<h1>Patterns<a class="headerlink" href="#patterns" title="Permalink to this headline">¶</a></h1>
-<p>Patterns provide convenient ways to manipulate data. The basic syntax for pattern matching with MLStyle is of the form</p>
+  <div class="section" id="pattern-matching">
+<h1>Pattern Matching<a class="headerlink" href="#pattern-matching" title="Permalink to this headline">¶</a></h1>
+<p>Pattern matching provides convenient ways to manipulate data. The basic syntax for pattern matching with MLStyle is of the form</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@match</span> <span class="nv">data</span> <span class="k">begin</span>
     <span class="nv">pattern1</span> <span class="o">=&gt;</span> <span class="nv">result1</span>
     <span class="nv">pattern2</span> <span class="o">=&gt;</span> <span class="nv">result2</span>
@@ -240,7 +241,7 @@
 <span class="k">end</span>
 </pre></div>
 </div>
-<p>MLStyle will first test if <code class="docutils literal notranslate"><span class="pre">data</span></code> is matched by <code class="docutils literal notranslate"><span class="pre">pattern1</span></code> and if it does match, return <code class="docutils literal notranslate"><span class="pre">result1</span></code>. If <code class="docutils literal notranslate"><span class="pre">pattern1</span></code> does not match, then MLStyle moves on to the next pattern. If no pattern in the list matches <code class="docutils literal notranslate"><span class="pre">data</span></code>, an error is thrown.</p>
+<p>MLStyle will first test if <code class="docutils literal notranslate"><span class="pre">data</span></code> is matched by <code class="docutils literal notranslate"><span class="pre">pattern1</span></code> and if it does match, return <code class="docutils literal notranslate"><span class="pre">result1</span></code>. If <code class="docutils literal notranslate"><span class="pre">pattern1</span></code> does not match, then MLStyle moves on to the next pattern in sequence. If no pattern in the list matches <code class="docutils literal notranslate"><span class="pre">data</span></code>, an error is thrown.</p>
 <p>In version 0.4.1 and newer, if you only have a single pattern you may instead write</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@match</span> <span class="nv">data</span> <span class="nv">pattern</span> <span class="o">=&gt;</span> <span class="nv">result</span>
 </pre></div>
@@ -257,7 +258,7 @@
 <span class="s">&quot;right!&quot;</span>
 </pre></div>
 </div>
-<p>All literal data introduced with Julia syntax could be matched by literal patterns.</p>
+<p>All literal data introduced with Julia syntax can be matched by literal patterns.</p>
 <p>However, note that the equality is strict for primitive types(<code class="docutils literal notranslate"><span class="pre">Int8-64</span></code>, <code class="docutils literal notranslate"><span class="pre">UInt8-64</span></code>, <code class="docutils literal notranslate"><span class="pre">Bool</span></code>, etc.) and singleton types(<code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">Data</span> <span class="pre">end;</span> <span class="pre">Data()</span></code>).</p>
 <p>Specifically, <strong>substrings can match a literal string.</strong></p>
 </div>
@@ -296,9 +297,9 @@
 </pre></div>
 </div>
 <p>Unlike most of ML languages or other libraries who only permit guards in the end of a case clause,
-MLStyle allows you to put guards anywhere during matching.</p>
+MLStyle.jl allows you to put guards anywhere during matching.</p>
 <p>However, remember, due to some Julia optimization details, even if the guards can be put
-in the middle of a matching process, still you’d better postpone it to the end of matching, for better performance.</p>
+in the middle of a matching process, it is still better to postpone it until the end of matching sequence. This allows for better performance.</p>
 <p>Sometimes, in practice, you might want to introduce type variables into the scope, in this case use <code class="docutils literal notranslate"><span class="pre">where</span></code> clause, and see <a class="reference external" href="#advanced-type-patterns">Advanced Type Patterns</a> for more details.</p>
 </div>
 <div class="section" id="and-patterns">
@@ -321,8 +322,8 @@ in the middle of a matching process, still you’d better postpone it to the end
 </pre></div>
 </div>
 </div>
-<div class="section" id="destructuring-tuple-array-and-dict-patterns">
-<h2>Destructuring Tuple Array and Dict Patterns<a class="headerlink" href="#destructuring-tuple-array-and-dict-patterns" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="destructuring-tuples-arrays-and-dictionaries-with-pattern-matching">
+<h2>Destructuring Tuples, Arrays, and Dictionaries with Pattern Matching<a class="headerlink" href="#destructuring-tuples-arrays-and-dictionaries-with-pattern-matching" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Tuple Patterns</p></li>
 </ul>
@@ -346,6 +347,12 @@ in the middle of a matching process, still you’d better postpone it to the end
  <span class="m">3</span>
 <span class="gp">julia&gt;</span> <span class="nv">it</span><span class="p">[</span><span class="m">2</span><span class="p">]</span>
 <span class="m">4</span>
+
+<span class="gp">julia&gt;</span> <span class="nd">@match</span> <span class="nb">Int</span><span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">]</span> <span class="k">begin</span>
+         <span class="nb">Any</span><span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="o">:</span><span class="nv">a</span>
+         <span class="nb">Int</span><span class="p">[</span><span class="nv">_</span><span class="p">,</span> <span class="nv">_</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="o">:</span><span class="nv">b</span>
+       <span class="k">end</span>
+<span class="o">:</span><span class="nv">b</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -364,7 +371,7 @@ in the middle of a matching process, still you’d better postpone it to the end
 <span class="m">7</span>
 </pre></div>
 </div>
-<p>Note that, due to the lack of an operation for distinguishing <code class="docutils literal notranslate"><span class="pre">nothing</span></code> from “key not found” in Julia’s standard library, the dictionary pattern has a little overhead. Things will get solved after <a class="reference external" href="https://github.com/JuliaLang/julia/pull/34821">Julia#34821</a> gets done.</p>
+<p>Note that, due to the lack of an operation for distinguishing <code class="docutils literal notranslate"><span class="pre">nothing</span></code> from “key not found” in Julia’s standard library, the dictionary pattern has a little overhead. This will be resolved after <a class="reference external" href="https://github.com/JuliaLang/julia/pull/34821">Julia#34821</a> is completed.</p>
 <p><strong>P.S</strong>:  MLStyle will not refer an external package to solve this issue, as MLStyle is generating “runtime support free” code, which means that any code generated by MLStyle itself depends only on Stdlib. This feature allows MLStyle to be introduced as a dependency only in development, instead of being distributed together to downstream codes.</p>
 </div>
 <div class="section" id="deconstruction-of-custom-composite-data">
@@ -446,6 +453,40 @@ in the middle of a matching process, still you’d better postpone it to the end
 </pre></div>
 </div>
 </div>
+<div class="section" id="macro-call-patterns">
+<h2>Macro Call Patterns<a class="headerlink" href="#macro-call-patterns" title="Permalink to this headline">¶</a></h2>
+<p>By default, macro calls occur in patterns will be no different than its expanded expression, hence the following bidirectional relationship <strong>sometimes</strong> holds:</p>
+<div class="highlight-julia-console notranslate"><div class="highlight"><pre><span></span><span class="gp">julia&gt;</span> <span class="k">macro</span> <span class="nf">mymacro</span><span class="p">(</span><span class="nv">a</span><span class="p">)</span>
+         <span class="nb">esc</span><span class="p">(</span><span class="o">:</span><span class="p">([</span><span class="o">$</span><span class="nv">a</span><span class="p">]))</span>
+       <span class="k">end</span>
+<span class="nd">@mymacro</span> <span class="p">(</span><span class="k">macro</span> <span class="nv">with</span> <span class="m">1</span> <span class="nv">method</span><span class="p">)</span>
+
+<span class="gp">julia&gt;</span> <span class="nv">a</span> <span class="o">=</span> <span class="m">2</span>
+<span class="m">2</span>
+
+<span class="gp">julia&gt;</span> <span class="nv">a</span> <span class="o">==</span> <span class="nd">@match</span> <span class="nd">@mymacro</span><span class="p">(</span><span class="nv">a</span><span class="p">)</span> <span class="k">begin</span>
+                <span class="nd">@mymacro</span><span class="p">(</span><span class="nv">a</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nv">a</span>
+            <span class="k">end</span>
+<span class="k">true</span>
+
+<span class="c"># expanded form:</span>
+<span class="c"># julia&gt; a == @match [a] begin</span>
+<span class="c">#                [a] =&gt; a</span>
+<span class="c">#            end</span>
+</pre></div>
+</div>
+<p>However, you can also change the pattern compilation behavior by overloading <code class="docutils literal notranslate"><span class="pre">MLStyle.pattern_unmacrocall</span></code>, whose usage can be found at the implementation of the pattern support for <a class="reference external" href="https://github.com/thautwarm/MLStyle.jl/blob/master/src/Pervasives.jl#L191"><code class="docutils literal notranslate"><span class="pre">&#64;r_str</span></code></a>.</p>
+<p>Some examples about string macro patterns:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@match</span>  <span class="nv">raw</span><span class="s">&quot;$$$&quot;</span> <span class="k">begin</span>
+    <span class="nv">raw</span><span class="s">&quot;$$$&quot;</span> <span class="o">=&gt;</span> <span class="p">...</span>
+<span class="k">end</span>
+
+<span class="nd">@match</span> <span class="s">&quot;123&quot;</span> <span class="k">begin</span>
+    <span class="sr">r&quot;\G\d+$&quot;</span> <span class="o">=&gt;</span> <span class="p">...</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="custom-patterns">
 <h2>Custom Patterns<a class="headerlink" href="#custom-patterns" title="Permalink to this headline">¶</a></h2>
 <p>As we’ve suggested in <a class="reference external" href="#capturing-patterns">Capturing-Patterns</a>,
@@ -469,7 +510,7 @@ you can always define your own patterns with MLStyle and easily leverge our comp
 </li>
 <li><p>usage</p>
 <p>We compile the AST <code class="docutils literal notranslate"><span class="pre">pat_obj{c,</span> <span class="pre">d}(e,</span> <span class="pre">f)</span> <span class="pre">where</span> <span class="pre">{a,</span> <span class="pre">b}</span></code> into
-patterns with <code class="docutils literal notranslate"><span class="pre">MLStyle.pattern_uncall(pat_obj,</span> <span class="pre">expr_to_pat,</span> <span class="pre">[:a,</span> <span class="pre">:b],</span> <span class="pre">[:c,</span> <span class="pre">:d],</span> <span class="pre">[:e,</span> <span class="pre">:f])</span></code></p>
+the pattern with <code class="docutils literal notranslate"><span class="pre">MLStyle.pattern_uncall(pat_obj,</span> <span class="pre">expr_to_pat,</span> <span class="pre">[:a,</span> <span class="pre">:b],</span> <span class="pre">[:c,</span> <span class="pre">:d],</span> <span class="pre">[:e,</span> <span class="pre">:f])</span></code>.</p>
 </li>
 </ul>
 </li>
@@ -491,7 +532,7 @@ patterns with <code class="docutils literal notranslate"><span class="pre">MLSty
 <li><p><code class="docutils literal notranslate"><span class="pre">MLStyle.is_enum</span></code></p>
 <p>In a pattern <code class="docutils literal notranslate"><span class="pre">[A,</span> <span class="pre">B]</span></code>, usually we think both <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> are capturing patterns. However, it is handy if we can have a pattern <code class="docutils literal notranslate"><span class="pre">A</span></code> whose match means comparing to the global variable <code class="docutils literal notranslate"><span class="pre">A</span></code>.</p>
 <p>To achieve this, we provide <code class="docutils literal notranslate"><span class="pre">MLStyle.is_enum</span></code>.
-For a visible global variable <code class="docutils literal notranslate"><span class="pre">A</span></code>, if <code class="docutils literal notranslate"><span class="pre">MLStyle.is_enum(A)</span> <span class="pre">==</span> <span class="pre">true</span></code>, a symbol <code class="docutils literal notranslate"><span class="pre">A</span></code> will compiled into patterns with <code class="docutils literal notranslate"><span class="pre">MLStyle.pattern_uncall(A,</span> <span class="pre">expr_to_ast,</span> <span class="pre">[],</span> <span class="pre">[],</span> <span class="pre">[])</span></code></p>
+For a visible global variable <code class="docutils literal notranslate"><span class="pre">A</span></code>, if <code class="docutils literal notranslate"><span class="pre">MLStyle.is_enum(A)</span> <span class="pre">==</span> <span class="pre">true</span></code>, a symbol <code class="docutils literal notranslate"><span class="pre">A</span></code> will compile into a pattern with <code class="docutils literal notranslate"><span class="pre">MLStyle.pattern_uncall(A,</span> <span class="pre">expr_to_ast,</span> <span class="pre">[],</span> <span class="pre">[],</span> <span class="pre">[])</span></code>.</p>
 </li>
 </ul>
 <p>We present some examples for understandability:</p>
@@ -800,7 +841,7 @@ For a visible global variable <code class="docutils literal notranslate"><span c
 <p><strong>How you create an AST, then how you match them.</strong></p>
 <p><strong>How you use AST interpolations(<code class="docutils literal notranslate"><span class="pre">$</span></code> operation), then how you use capturing patterns on them.</strong></p>
 <p>The pattern <code class="docutils literal notranslate"><span class="pre">quote</span> <span class="pre">..</span> <span class="pre">end</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">:(begin</span> <span class="pre">...</span> <span class="pre">end)</span></code>.</p>
-<p>Additionally, you can use any other patterns simultaneously when matching asts. In fact, there’re regular patterns inside a <code class="docutils literal notranslate"><span class="pre">$</span></code> expression of your ast pattern.</p>
+<p>Additionally, you can use any other patterns simultaneously when matching ASTs. In fact, there are regular patterns inside a <code class="docutils literal notranslate"><span class="pre">$</span></code> expression of your AST pattern.</p>
 <p>A more complex example presented here might help with your comprehension about this:</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nv">ast</span> <span class="o">=</span> <span class="k">quote</span>
     <span class="k">function</span> <span class="nf">f</span><span class="p">(</span><span class="nv">a</span><span class="p">,</span> <span class="nv">b</span><span class="p">,</span> <span class="nv">c</span><span class="p">,</span> <span class="nv">d</span><span class="p">)</span>
@@ -849,7 +890,7 @@ For a visible global variable <code class="docutils literal notranslate"><span c
 <span class="c">#   :app_arg        =&gt; :d</span>
 </pre></div>
 </div>
-<p>Here is several articles about Ast Patterns.</p>
+<p>If you are interested, here are several useful articles about AST Patterns:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.reddit.com/r/Julia/comments/ap4xwr/mlstylejl_a_modern_way_to_manipulate_asts/">A Modern Way to Manipulate ASTs</a>.</p></li>
 <li><p><a class="reference external" href="https://discourse.julialang.org/t/an-elegant-and-efficient-way-to-extract-something-from-asts/19123">An Elegant and Efficient Way to Extract Something from ASTs</a>.</p></li>
@@ -877,7 +918,7 @@ For a visible global variable <code class="docutils literal notranslate"><span c
     </p>
     <p>
         &copy; Copyright 2020, thautwarm.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.0.<br/>
     </p>
   </div>
 </footer>
